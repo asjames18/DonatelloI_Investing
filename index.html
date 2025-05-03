@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StableEase - Your Simple Gateway to DeFi</title>
+  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.22.9/babel.min.js"></script>
+  <style>
+    /* Minimal Tailwind CSS subset for this design */
+    *, ::before, ::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    }
+    .bg-gradient {
+      background: linear-gradient(135deg, #e0f7fa 0%, #e6f3ff 100%);
+    }
+    .min-h-screen {
+      min-height: 100vh;
+    }
+    .flex {
+      display: flex;
+    }
+    .flex-col {
+      flex-direction: column;
+    }
+    .items-center {
+      align-items: center;
+    }
+    .justify-center {
+      justify-content: center;
+    }
+    .justify-around {
+      justify-content: space-around;
+    }
+    .gap-6 {
+      gap: 1.5rem;
+    }
+    .gap-12 {
+      gap: 3rem;
+    }
+    .px-4 {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    .py-8 {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+    .py-3 {
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+    }
+    .px-6 {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+    .p-4 {
+      padding: 1rem;
+    }
+    .p-6 {
+      padding: 1.5rem;
+    }
+    .mb-12 {
+      margin-bottom: 3rem;
+    }
+    .mb-4 {
+      margin-bottom: 1rem;
+    }
+    .mb-6 {
+      margin-bottom: 1.5rem;
+    }
+    .mt-2 {
+      margin-top: 0.5rem;
+    }
+    .mt-4 {
+      margin-top: 1rem;
+    }
+    .mt-6 {
+      margin-top: 1.5rem;
+    }
+    .max-w-4xl {
+      max-width: 56rem;
+    }
+    .max-w-md {
+      max-width: 28rem;
+    }
+    .max-w-sm {
+      max-width: 24rem;
+    }
+    .max-w-xs {
+      max-width: 20rem;
+    }
+    .mx-auto {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .text-center {
+      text-align: center;
+    }
+    .text-left {
+      text-align: left;
+    }
+    .text-4xl {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+    .text-5xl {
+      font-size: 3rem;
+      line-height: 1;
+    }
+    .text-2xl {
+      font-size: 1.5rem;
+      line-height: 2rem;
+    }
+    .text-xl {
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+    }
+    .text-lg {
+      font-size: 1.125rem;
+      line-height: 1.75rem;
+    }
+    .text-sm {
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+    }
+    .font-bold {
+      font-weight: 700;
+    }
+    .font-semibold {
+      font-weight: 600;
+    }
+    .text-gray-800 {
+      color: #1f2937;
+    }
+    .text-gray-600 {
+      color: #4b5563;
+    }
+    .text-gray-500 {
+      color: #6b7280;
+    }
+    .text-blue-500 {
+      color: #3b82f6;
+    }
+    .text-blue-600 {
+      color: #2563eb;
+    }
+    .text-white {
+      color: #ffffff;
+    }
+    .bg-white {
+      background-color: #ffffff;
+    }
+    .bg-gray-200 {
+      background-color: #e5e7eb;
+    }
+    .bg-blue-50 {
+      background-color: #eff6ff;
+    }
+    .bg-blue-600 {
+      background-color: #2563eb;
+    }
+    .hover\:bg-blue-700:hover {
+      background-color: #1d4ed8;
+    }
+    .rounded-3xl {
+      border-radius: 1.5rem;
+    }
+    .rounded-t-2xl {
+      border-top-left-radius: 1rem;
+      border-top-right-radius: 1rem;
+    }
+    .rounded-lg {
+      border-radius: 0.5rem;
+    }
+    .shadow-soft {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    .icon-circle {
+      background-color: #f0f7ff;
+      border-radius: 50%;
+      padding: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .w-8 {
+      width: 2rem;
+    }
+    .h-8 {
+      height: 2rem;
+    }
+    .w-5 {
+      width: 1.25rem;
+    }
+    .h-5 {
+      height: 1.25rem;
+    }
+    .w-full {
+      width: 100%;
+    }
+    .h-6 {
+      height: 1.5rem;
+    }
+    .transition {
+      transition-property: all;
+      transition-duration: 150ms;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .grid {
+      display: grid;
+    }
+    .grid-cols-1 {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+    .md\:grid-cols-3 {
+      @media (min-width: 768px) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+    .md\:flex-row {
+      @media (min-width: 768px) {
+        flex-direction: row;
+      }
+    }
+    .md\:text-5xl {
+      @media (min-width: 768px) {
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+    .md\:text-xl {
+      @media (min-width: 768px) {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+      }
+    }
+    .md\:text-left {
+      @media (min-width: 768px) {
+        text-align: left;
+      }
+    }
+    .hover\:underline:hover {
+      text-decoration: underline;
+    }
+    .inline-block {
+      display: inline-block;
+    }
+    .tooltip {
+      position: relative;
+    }
+    .tooltip:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+    .tooltip-text {
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s;
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #ffffff;
+      color: #4b5563;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      white-space: nowrap;
+      font-size: 0.875rem;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body class="bg-gradient min-h-screen font-sans">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const App = () => {
+      return (
+        <div className="flex flex-col items-center justify-center min-h-screen px-4 py-8">
+          {/* Header Section */}
+          <header className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+              Your Simple Gateway to DeFi
+            </h1>
+            <p className="text-lg md:text-xl text-gray-600 max-w-md mx-auto">
+              Discover Decentralized Finance (DeFi) with easy stablecoin swaps and secure earning opportunities.
+            </p>
+          </header>
+
+          {/* Main Content */}
+          <main className="flex flex-col md:flex-row items-center justify-center gap-12 mb-12">
+            {/* Mobile Mockup */}
+            <div className="relative bg-white rounded-3xl shadow-soft p-4 w-full max-w-xs">
+              <div className="bg-gray-200 rounded-t-2xl h-6 w-full mb-4"></div>
+              <div className="text-center">
+                <h3 className="text-lg font-semibold text-gray-800 mb-4">Your Stablecoins</h3>
+                <div className="flex justify-around mb-6">
+                  <div className="text-center tooltip">
+                    <div className="icon-circle">
+                      <svg className="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m-12 5h12m-4-4l4 4m-4-4l4-4"></path>
+                      </svg>
+                    </div>
+                    <p className="mt-2 text-sm text-gray-600">Swap</p>
+                    <span className="tooltip-text">Exchange one stablecoin for another with low fees, powered by DeFi.</span>
+                  </div>
+                  <div className="text-center tooltip">
+                    <div className="icon-circle">
+                      <svg className="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm0 8c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4-4z"></path>
+                      </svg>
+                    </div>
+                    <p className="mt-2 text-sm text-gray-600">Earn</p>
+                    <span className="tooltip-text">Lend your stablecoins through DeFi to earn rewards safely.</span>
+                  </div>
+                </div>
+                <div className="bg-blue-50 rounded-lg p-4 tooltip">
+                  <p className="text-sm text-gray-600 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-blue-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 11c1.104 0 2-.896 2-2s-.896-2-2-2-2 .896-2 2 .896 2 2 2zm0 2c-2.21 0-4 1.79-4 4v1h8v-1c0-2.21-1.79-4-4-4z"></path>
+                    </svg>
+                    You control your funds
+                  </p>
+                  <span className="tooltip-text">Your funds stay in your wallet, not ours—a core DeFi principle.</span>
+                </div>
+              </div>
+            </div>
+
+            {/* CTA and Security Section */}
+            <div className="text-center md:text-left">
+              <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                DeFi, Simplified for You
+              </h2>
+              <p className="text-gray-600 mb-6 max-w-sm">
+                Access the power of DeFi without the complexity. Use stablecoins to swap and earn, all while staying in control.
+              </p>
+              <button className="bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition">
+                Get Started
+              </button>
+            </div>
+          </main>
+
+          {/* Enhanced Educational Section */}
+          <section className="text-center mb-12 max-w-4xl mx-auto">
+            <h3 className="text-xl font-semibold text-gray-800 mb-6">
+              Learn the Basics of DeFi
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* What is DeFi */}
+              <div className="bg-white rounded-lg shadow-soft p-6">
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">
+                  What is DeFi?
+                </h4>
+                <p className="text-gray-600 text-sm">
+                  DeFi (Decentralized Finance) lets you manage money without banks, using secure technology. It’s powerful but can be complex—we make it easy.
+                </p>
+              </div>
+
+              {/* Why Stablecoins */}
+              <div className="bg-white rounded-lg shadow-soft p-6">
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">
+                  Why Stablecoins?
+                </h4>
+                <p className="text-gray-600 text-sm">
+                  Stablecoins hold steady value, making DeFi safer for beginners. Swap or earn with less worry about price swings.
+                </p>
+              </div>
+
+              {/* Stay Safe in DeFi */}
+              <div className="bg-white rounded-lg shadow-soft p-6">
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">
+                  Stay Safe in DeFi
+                </h4>
+                <p className="text-gray-600 text-sm">
+                  Keep your private key secure—it’s your access to funds. Watch out for scams promising huge rewards; if it sounds too good, it might be risky.
+                </p>
+              </div>
+            </div>
+            <div className="mt-6">
+              <p className="text-gray-600 mb-4">
+                See how easy DeFi can be with our quick video tutorial.
+              </p>
+              <a href="#" className="text-blue-600 hover:underline">
+                Watch Tutorial
+              </a>
+              <p className="text-gray-600 mt-4">
+                Have more questions? Check out our FAQs.
+              </p>
+              <a href="#" className="text-blue-600 hover:underline">
+                View FAQs
+              </a>
+            </div>
+          </section>
+
+          {/* Footer */}
+          <footer className="text-gray-500 text-sm">
+            <p>© 2025 StableEase. All rights reserved.</p>
+          </footer>
+        </div>
+      );
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
